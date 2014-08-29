@@ -165,7 +165,37 @@ typename    { stat.keyword(yytext); }
 using       { stat.keyword(yytext); }
 asm         { printf("asm is unsupported\n"); }
 
-{L}({L}|{D})*   { stat.identifier(yytext); }
+  /***************** Hipacc specific ***************/
+Image               { stat.keyword(yytext); }
+Pyramid             { stat.keyword(yytext); }
+Accessor            { stat.keyword(yytext); }
+AccessorNN          { stat.keyword(yytext); }
+AccessorLF          { stat.keyword(yytext); }
+AccessorCF          { stat.keyword(yytext); }
+AccessorL3          { stat.keyword(yytext); }
+Kernel              { stat.keyword(yytext); }
+IterationSpace      { stat.keyword(yytext); }
+Mask                { stat.keyword(yytext); }
+Domain              { stat.keyword(yytext); }
+BoundaryCondition   { stat.keyword(yytext); }
+GlobalReduction     { stat.keyword(yytext); }
+BOUNDARY_CLAMP      { stat.keyword(yytext); }
+BOUNDARY_MIRROR     { stat.keyword(yytext); }
+BOUNDARY_UNDEFINED  { stat.keyword(yytext); }
+BOUNDARY_REPEAT     { stat.keyword(yytext); }
+BOUNDARY_CONSTANT   { stat.keyword(yytext); }
+output              { stat.keyword(yytext); }
+convolve            { stat.keyword(yytext); }
+reduce              { stat.keyword(yytext); }
+iterate             { stat.keyword(yytext); }
+traverse            { stat.keyword(yytext); }
+HipaccSUM           { stat.keyword(yytext); }
+HipaccMIN           { stat.keyword(yytext); }
+HipaccMAX           { stat.keyword(yytext); }
+HipaccPROD          { stat.keyword(yytext); }
+HipaccMEDIAN        { stat.keyword(yytext); }
+
+{L}({L}|{D})*       { stat.identifier(yytext); }
 
   /***************** operators ***************/
 
