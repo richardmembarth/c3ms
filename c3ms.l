@@ -165,6 +165,83 @@ typename    { stat.keyword(yytext); }
 using       { stat.keyword(yytext); }
 asm         { printf("asm is unsupported\n"); }
 
+  /***************** CUDA specific ***************/
+__device__              { stat.cspec(yytext); }
+__global__              { stat.cspec(yytext); }
+__host__                { stat.cspec(yytext); }
+__constant__            { stat.cspec(yytext); }
+__shared__              { stat.cspec(yytext); }
+__inline__              { stat.cspec(yytext); }
+__align__               { stat.cspec(yytext); }
+__thread__              { stat.cspec(yytext); }
+__restrict__            { stat.cspec(yytext); }
+__launch_bounds__       { stat.cspec(yytext); }
+__attribute__           { stat.cspec(yytext); printf("attribute: %s\n", yytext); }
+__restrict              { stat.cspec(yytext); }
+uchar                   { stat.type(yytext); }
+ushort                  { stat.type(yytext); }
+uint                    { stat.type(yytext); }
+ulong                   { stat.type(yytext); }
+ufloat                  { stat.type(yytext); }
+char1                   { stat.type(yytext); }
+char2                   { stat.type(yytext); }
+char3                   { stat.type(yytext); }
+char4                   { stat.type(yytext); }
+uchar1                  { stat.type(yytext); }
+uchar2                  { stat.type(yytext); }
+uchar3                  { stat.type(yytext); }
+uchar4                  { stat.type(yytext); }
+short1                  { stat.type(yytext); }
+short2                  { stat.type(yytext); }
+short3                  { stat.type(yytext); }
+short4                  { stat.type(yytext); }
+ushort1                 { stat.type(yytext); }
+ushort2                 { stat.type(yytext); }
+ushort3                 { stat.type(yytext); }
+ushort4                 { stat.type(yytext); }
+int1                    { stat.type(yytext); }
+int2                    { stat.type(yytext); }
+int3                    { stat.type(yytext); }
+int4                    { stat.type(yytext); }
+uint1                   { stat.type(yytext); }
+uint2                   { stat.type(yytext); }
+uint3                   { stat.type(yytext); }
+uint4                   { stat.type(yytext); }
+long1                   { stat.type(yytext); }
+long2                   { stat.type(yytext); }
+long3                   { stat.type(yytext); }
+long4                   { stat.type(yytext); }
+ulong1                  { stat.type(yytext); }
+ulong2                  { stat.type(yytext); }
+ulong3                  { stat.type(yytext); }
+ulong4                  { stat.type(yytext); }
+float1                  { stat.type(yytext); }
+float2                  { stat.type(yytext); }
+float3                  { stat.type(yytext); }
+float4                  { stat.type(yytext); }
+ufloat1                 { stat.type(yytext); }
+ufloat2                 { stat.type(yytext); }
+ufloat3                 { stat.type(yytext); }
+ufloat4                 { stat.type(yytext); }
+dim3                    { stat.type(yytext); }
+
+texture                 { stat.type(yytext); }
+textureReference        { stat.type(yytext); }
+cudaError_t             { stat.type(yytext); }
+cudaDeviceProp          { stat.type(yytext); }
+cudaMemcpyKind          { stat.type(yytext); }
+cudaArray               { stat.type(yytext); }
+cudaChannelFormatKind   { stat.type(yytext); }
+cudaChannelFormatDesc   { stat.type(yytext); }
+cudaTextureAddressMode  { stat.type(yytext); }
+cudaTextureFilterMode   { stat.type(yytext); }
+cudaTextureReadMode     { stat.type(yytext); }
+blockIdx\.[x|y|z]       { stat.keyword(yytext); }
+blockDim\.[x|y|z]       { stat.keyword(yytext); }
+gridDim\.[x|y|z]        { stat.keyword(yytext); }
+threadIdx\.[x|y|z]      { stat.keyword(yytext); }
+__syncthreads           { stat.keyword(yytext); }
+
 {L}({L}|{D})*   { stat.identifier(yytext); }
 
   /***************** operators ***************/
