@@ -165,7 +165,7 @@ typename    { stat.keyword(yytext); }
 using       { stat.keyword(yytext); }
 asm         { printf("asm is unsupported\n"); }
 
-{L}({L}|{D})*	{ stat.identifier(yytext); }
+{L}({L}|{D})*   { stat.identifier(yytext); }
 
   /***************** operators ***************/
 
