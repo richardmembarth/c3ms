@@ -1,0 +1,23 @@
+The maintainers is a copy of the way that the Linux kernel maintainers works.
+
+D: Description
+F: Files Maintained (Use regular expression to do a match)
+P: Person
+M: Mail patches to
+W: Web-page
+S: Status, one of the following:
+
+        Supported:      Someone is actually paid to look after this.
+        Maintained:     Someone actually looks after it.
+        Odd Fixes:      It has a maintainer but they don't have time to do
+                        much other than throw the odd patch in. See below..
+        Orphan:         No current maintainer [but maybe you could take the
+                        role as you write your new code].
+
+---------------------------------------
+D:Everything
+F:*
+P:Basilio B. Fraguela
+M:basilio.fraguela@udc.es
+W:http://www.des.udc.es/~basilio/
+S:Supported
