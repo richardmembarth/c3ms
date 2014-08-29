@@ -1,17 +1,17 @@
-/* 
+/*
  C3MS: C++ Code Complexity Measurement System
  Copyright (C) 2009-2013 Basilio B. Fraguela. Universidade da Coruna
- 
+
  This file is part of C3MS.
- 
+
  C3MS is free software; you can redistribute it and/or modify it under the terms
  of the GNU General Public License as published by the Free Software Foundation;
  either version 2, or (at your option) any later version.
- 
+
  C3MS is distributed in the  hope that it will  be  useful, but  WITHOUT ANY
  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- 
+
  You should  have received a copy of  the GNU General  Public License along with
  C3MS; see the file COPYING.  If not, write to the  Free Software Foundation, 59
  Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -24,8 +24,8 @@
 #include <string>
 
 class CodeStatistics {
-  
-  struct ltstr2 { 
+
+  struct ltstr2 {
     bool operator()(const std::string& s1, const std::string& s2) const
     {
       return s1.compare(s2) < 0;
@@ -33,15 +33,15 @@ class CodeStatistics {
   };
 
   typedef std::set<std::string, ltstr2> CSSet;
-  
+
 public:
-  
+
   typedef unsigned int StatSize;
 
   CodeStatistics() {
     reset();
   }
-  
+
   void reset() {
     types = 0;
     constants = 0;
@@ -50,7 +50,7 @@ public:
     keywords = 0;
     operators = 0;
     conditions = 0;
-    
+
     typesSet.clear();
     constantsSet.clear();
     identifiersSet.clear();
@@ -86,7 +86,7 @@ public:
   StatSize getUniqueCspecs()      const { return cspecsSet.size(); }
   StatSize getUniqueKeywords()    const { return keywordsSet.size(); }
   StatSize getUniqueOps()         const { return operatorsSet.size(); }
-  
+
   StatSize getUniqueOperands() const  { return getUniqueTypes()  + getUniqueConstants() + getUniqueIdentifiers(); }
   StatSize getUniqueOperators() const { return getUniqueCspecs() + getUniqueKeywords()  + getUniqueOps();   }
 
@@ -108,9 +108,9 @@ public:
 
     return *this;
   }
-  
+
 private:
-  
+
   StatSize types, constants, identifiers, cspecs, keywords, operators, conditions;
 
   CSSet typesSet, constantsSet, identifiersSet, cspecsSet, keywordsSet, operatorsSet;
