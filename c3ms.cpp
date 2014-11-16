@@ -63,7 +63,7 @@ namespace {
   }
 
   /// Stores the volume in V
-  double computeHalsteadEffort(const CodeStatistics& cs, double& V, bool verbose) {
+  double computeHalsteadEffort(const CodeStatistics& cs, double& V, double& D, bool verbose) {
     unsigned int n1 = cs.getUniqueOperators();
     unsigned int n2 = cs.getUniqueOperands();
 
@@ -74,6 +74,7 @@ namespace {
     unsigned int N = N1 + N2;
 
     V = N * log2((double)n);
+    D = (double(n1)/2.0) * (double(N2)/double(n2));
 
     double Lhat = (2.0 / n1) * (n2 / (double)N2);
 
@@ -123,13 +124,13 @@ namespace {
 int main(int argc, char *argv[]) {
   CodeStatistics cs;
   struct stat fileStat;
-  double globalEhat = 0.0, globalVolume = 0.0;
+  double globalEhat = 0.0, globalVolume = 0.0, globalDiff = 0.0;
   CodeStatistics::StatSize totConds = 0;
 
   config(argc, argv);
 
   for (int nfile = optind; nfile < argc; ++nfile) {
-    double localVolume;
+    double localVolume, localDiff;
 
     if (stat(argv[nfile], &fileStat) != 0) {
       printf("Error accessing %s errno=%d\n", argv[nfile], errno);
@@ -142,11 +143,11 @@ int main(int argc, char *argv[]) {
     }
 
     const CodeStatistics& csfile = readFile(argv[nfile]);
-    double localEhat = computeHalsteadEffort(csfile, localVolume, verbosity > 2);
+    double localEhat = computeHalsteadEffort(csfile, localVolume, localDiff, verbosity > 2);
     totConds += csfile.getConds();
 
     if (verbosity != 0) {
-      printf("%25s: %10.2lf  (Vol %10.2lf) (%5d conds)\n", argv[nfile], localEhat, localVolume, csfile.getConds());
+      printf("%25s: %10.2lf  (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", argv[nfile], localEhat, localVolume, localDiff, csfile.getConds());
       if (verbosity > 1)
         reportStatistics(csfile);
     }
@@ -156,11 +157,12 @@ int main(int argc, char *argv[]) {
 
     globalEhat   += localEhat;
     globalVolume += localVolume;
+    globalDiff   += localDiff;
   }
 
   if (verbosity)
     printf("\n");
-  printf("       Total Effort: %10.2lf (Vol %10.2lf) (%5d conds)\n", globalEhat, globalVolume, totConds);
+  printf("       Total Effort: %10.2lf (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", globalEhat, globalVolume, globalDiff, totConds);
 
   if (displayGlobalData) {
     if (verbosity > 1) {
@@ -168,8 +170,8 @@ int main(int argc, char *argv[]) {
       reportStatistics(cs);
     }
 
-    globalEhat = computeHalsteadEffort(cs, globalVolume, verbosity > 2);
-    printf("Total Global Effort: %10.2lf (Vol %10.2lf) (%5d conds)\n", globalEhat, globalVolume, totConds);
+    globalEhat = computeHalsteadEffort(cs, globalVolume, globalDiff, verbosity > 2);
+    printf("Total Global Effort: %10.2lf (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", globalEhat, globalVolume, globalDiff, totConds);
   }
 
   exit(EXIT_SUCCESS);
