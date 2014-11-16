@@ -147,7 +147,7 @@ int main(int argc, char *argv[]) {
     totConds += csfile.getConds();
 
     if (verbosity != 0) {
-      printf("%25s: %10.2lf  (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", argv[nfile], localEhat, localVolume, localDiff, csfile.getConds());
+      printf("%25s: (Effort %10.2lf)  (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", argv[nfile], localEhat, localVolume, localDiff, csfile.getConds());
       if (verbosity > 1)
         reportStatistics(csfile);
     }
@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
 
   if (verbosity)
     printf("\n");
-  printf("       Total Summed Up Local Effort: %10.2lf (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", globalEhat, globalVolume, globalDiff, totConds);
+  printf("       Total Summed Up *Local* Effort: %10.2lf (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", globalEhat, globalVolume, globalDiff, totConds);
 
   if (displayGlobalData) {
     if (verbosity > 1) {
