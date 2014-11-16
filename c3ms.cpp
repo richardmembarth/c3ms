@@ -162,11 +162,11 @@ int main(int argc, char *argv[]) {
 
   if (verbosity)
     printf("\n");
-  printf("       Total Effort: %10.2lf (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", globalEhat, globalVolume, globalDiff, totConds);
+  printf("       Total Summed Up Local Effort: %10.2lf (Vol %10.2lf) (Diff %10.2lf) (%5d conds)\n", globalEhat, globalVolume, globalDiff, totConds);
 
   if (displayGlobalData) {
     if (verbosity > 1) {
-      puts("------------------  GLOBAL STATISTICS:");
+      puts("\n------------------  GLOBAL STATISTICS:");
       reportStatistics(cs);
     }
 
