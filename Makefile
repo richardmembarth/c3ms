@@ -28,8 +28,8 @@ ifdef PRODUCTION
   #-fomit-frame-pointer makes exceptions not work properly for some compilers
   CPPFLAGS := -I$(INCL) -O3 -DNDEBUG
 else
-  CFLAGS := -I$(INCL) -g
-  CPPFLAGS := -I$(INCL) -g
+  CFLAGS := -I$(INCL) -g -O1 -DDEBUG
+  CPPFLAGS := -I$(INCL) -g -O1 -DDEBUG
 endif
 
 
