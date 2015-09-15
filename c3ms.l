@@ -94,7 +94,7 @@ u64         { stat.type(yytext); }
 f32         { stat.type(yytext); }
 f64         { stat.type(yytext); }
 bool        { stat.type(yytext); }
-simd        { stat.type(yytext); }
+simd        {  }
 
 let         { stat.keyword(yytext); }
 static      { stat.keyword(yytext); }
