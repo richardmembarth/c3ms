@@ -100,18 +100,18 @@ let         { stat.keyword(yytext); }
 static      { stat.keyword(yytext); }
 extern      { stat.keyword(yytext); }
 type        { stat.keyword(yytext); }
-mut         { stat.keyword(yytext); }
+mut         {  }
 fn          { stat.keyword(yytext); }
 
 break       { stat.keyword(yytext); }
-in          { stat.keyword(yytext); }
+in          { }
 continue    { stat.keyword(yytext); }
-else        { stat.keyword(yytext); /*stat.cond();*/ }
-for         { stat.keyword(yytext); stat.cond(); stat.decOp(); }
-if          { stat.keyword(yytext); stat.cond(); stat.decOp(); }
+else        { stat.keyword(yytext); }
+for         { stat.keyword(yytext); }
+if          { stat.keyword(yytext); stat.cond(); }
 return      { stat.keyword(yytext); }
 struct      { stat.keyword(yytext); }
-while       { stat.keyword(yytext); stat.cond(); stat.decOp(); }
+while       { stat.keyword(yytext); stat.cond(); }
 
 false       { stat.constant(yytext); }
 true        { stat.constant(yytext); }
@@ -143,7 +143,7 @@ true        { stat.constant(yytext); }
 ("{"|"<%")  { stat.openBracket();  }
 ("}"|"%>")  { stat.closeBracket(); }
 ","     { stat.op(yytext); }
-":"     { stat.op(yytext); }
+":"     {  }
 "="     { stat.op(yytext); }
 "("     { stat.op(yytext); }
 ")"     {                  }
@@ -161,7 +161,7 @@ true        { stat.constant(yytext); }
 "<"     { stat.op(yytext); }
 ">"     { stat.op(yytext); }
 "^"     { stat.op(yytext); }
-"|"     { stat.op(yytext); }
+"|"     {  }
 "@"     { stat.op(yytext); }
 
   /***************** constants ***************/
