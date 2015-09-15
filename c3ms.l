@@ -72,6 +72,7 @@ IS          (u|U|l|L)*
 
 \#[\t ]*define          { stat.keyword(yytext); }
 \#[\t ]*else            { stat.keyword(yytext); /*stat.cond();*/ }
+\#[\t ]*elif            { stat.keyword(yytext); stat.cond(); }
 \#[\t ]*endif           { /* nothing*/ }
 \#[\t ]*if              { stat.keyword(yytext); stat.cond(); }
 \#[\t ]*ifdef           { stat.keyword(yytext); stat.cond(); }
@@ -163,7 +164,25 @@ try         { stat.keyword(yytext); }
 typeid      { stat.keyword(yytext); }
 typename    { stat.keyword(yytext); }
 using       { stat.keyword(yytext); }
-asm         { printf("asm is unsupported\n"); }
+asm         { stat.keyword(yytext); stat.op(yytext); }
+
+  /***************** CUDA specific ***************/
+
+char{D}     { stat.type(yytext); }
+uchar{D}    { stat.type(yytext); }
+short{D}    { stat.type(yytext); }
+ushort{D}   { stat.type(yytext); }
+int{D}      { stat.type(yytext); }
+uint{D}     { stat.type(yytext); }
+long{D}     { stat.type(yytext); }
+ulong{D}    { stat.type(yytext); }
+float{D}    { stat.type(yytext); }
+double{D}   { stat.type(yytext); }
+
+__device__ { stat.keyword(yytext); }
+__inline__ { stat.keyword(yytext); }
+__shared__ { stat.keyword(yytext); }
+__global__ { stat.keyword(yytext); }
 
 {L}({L}|{D})*   { stat.identifier(yytext); }
 
@@ -218,6 +237,7 @@ asm         { printf("asm is unsupported\n"); }
 "?"     { stat.op(yytext); stat.cond(); }
 
 \\      { /* macro continuation */ }
+\#\#    { /* macro concatenation */ stat.op(yytext); }
 
   /***************** constants ***************/
 
