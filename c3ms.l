@@ -70,19 +70,7 @@ IS          (u|U|l|L)*
 
   /********* Preprocessor ********************/
 
-\#[\t ]*define          { stat.keyword(yytext); }
-\#[\t ]*else            { stat.keyword(yytext); /*stat.cond();*/ }
-\#[\t ]*endif           { /* nothing*/ }
-\#[\t ]*if              { stat.keyword(yytext); stat.cond(); }
-\#[\t ]*ifdef           { stat.keyword(yytext); stat.cond(); }
-\#[\t ]*ifndef          { stat.keyword(yytext); stat.cond(); }
-\#[\t ]*include         { stat.keyword(yytext); BEGIN(includestate); }
-\#[\t ]*pragma          { stat.keyword(yytext); }
-\#[\t ]*line.*          { }
-
-<includestate>\<              { /* do not count as operator */ }
-<includestate>\>              { /* do not count as operator */ }
-<includestate>[\n\r]          { ParserLineno++; BEGIN(INITIAL); }
+  /* No preprocessor */
 
   /********* Eat Comments and lines **********/
 
@@ -94,85 +82,44 @@ IS          (u|U|l|L)*
 
 int         { stat.type(yytext); }
 float       { stat.type(yytext); }
-char        { stat.type(yytext); }
 double      { stat.type(yytext); }
-long        { stat.type(yytext); }
-short       { stat.type(yytext); }
-signed      { stat.type(yytext); }
-unsigned    { stat.type(yytext); }
-void        { stat.type(yytext); }
+i8          { stat.type(yytext); }
+i16         { stat.type(yytext); }
+i32         { stat.type(yytext); }
+i64         { stat.type(yytext); }
+u8          { stat.type(yytext); }
+u16         { stat.type(yytext); }
+u32         { stat.type(yytext); }
+u64         { stat.type(yytext); }
+f32         { stat.type(yytext); }
+f64         { stat.type(yytext); }
+bool        { stat.type(yytext); }
+simd        { stat.type(yytext); }
 
-auto        { stat.cspec(yytext); }
-extern      { stat.cspec(yytext); }
-register    { stat.cspec(yytext); }
-static      { stat.cspec(yytext); }
-typedef     { stat.cspec(yytext); }
-
-const       { stat.cspec(yytext); }
-volatile    { stat.cspec(yytext); }
+let         { stat.keyword(yytext); }
+static      { stat.keyword(yytext); }
+extern      { stat.keyword(yytext); }
+type        { stat.keyword(yytext); }
+mut         { stat.keyword(yytext); }
+fn          { stat.keyword(yytext); }
 
 break       { stat.keyword(yytext); }
-case        { stat.keyword(yytext); stat.cond(); }
+in          { stat.keyword(yytext); }
 continue    { stat.keyword(yytext); }
-default     { stat.keyword(yytext); stat.cond(); }
-do          { stat.keyword(yytext); }
 else        { stat.keyword(yytext); /*stat.cond();*/ }
-enum        { stat.keyword(yytext); }
 for         { stat.keyword(yytext); stat.cond(); stat.decOp(); }
-goto        { stat.keyword(yytext); }
 if          { stat.keyword(yytext); stat.cond(); stat.decOp(); }
 return      { stat.keyword(yytext); }
-sizeof      { stat.keyword(yytext); }
 struct      { stat.keyword(yytext); }
-switch      { stat.keyword(yytext); /*cond counted in cases+default*/ stat.decOp(); }
-union       { stat.keyword(yytext); }
 while       { stat.keyword(yytext); stat.cond(); stat.decOp(); }
-
-  /***************** C++ - specific ***************/
-
-bool        { stat.type(yytext); }
-wchar_t     { stat.type(yytext); }
 
 false       { stat.constant(yytext); }
 true        { stat.constant(yytext); }
-
-inline      { stat.cspec(yytext); }
-mutable     { stat.cspec(yytext); }
-virtual     { stat.cspec(yytext); }
-
-catch       { stat.keyword(yytext); stat.decOp(); }
-class       { stat.keyword(yytext); }
-const_cast  { stat.keyword(yytext); stat.decOp(); }
-delete      { stat.keyword(yytext); }
-dynamic_cast { stat.keyword(yytext); stat.decOp(); }
-explicit    { stat.keyword(yytext); }
-export      { stat.keyword(yytext); }
-friend      { stat.keyword(yytext); }
-namespace   { stat.keyword(yytext); }
-new         { stat.keyword(yytext); }
-operator    { stat.keyword(yytext); }
-private     { stat.keyword(yytext); }
-protected   { stat.keyword(yytext); }
-public      { stat.keyword(yytext); }
-reinterpret_cast { stat.keyword(yytext); stat.decOp(); }
-static_cast { stat.keyword(yytext); stat.decOp(); }
-template    { stat.keyword(yytext); stat.decOp(); /* either < or > is not an operator */ }
-this        { stat.keyword(yytext); }
-throw       { stat.keyword(yytext); }
-try         { stat.keyword(yytext); }
-typeid      { stat.keyword(yytext); }
-typename    { stat.keyword(yytext); }
-using       { stat.keyword(yytext); }
-asm         { printf("asm is unsupported\n"); }
 
 {L}({L}|{D})*   { stat.identifier(yytext); }
 
   /***************** operators ***************/
 
-"..."   { stat.op(yytext); }
-"::"    { stat.op(yytext); }
-">>="   { stat.op(yytext); }
-"<<="   { stat.op(yytext); }
 "+="    { stat.op(yytext); }
 "-="    { stat.op(yytext); }
 "*="    { stat.op(yytext); }
@@ -196,12 +143,12 @@ asm         { printf("asm is unsupported\n"); }
 ("{"|"<%")  { stat.openBracket();  }
 ("}"|"%>")  { stat.closeBracket(); }
 ","     { stat.op(yytext); }
-":"     {            }
+":"     { stat.op(yytext); }
 "="     { stat.op(yytext); }
 "("     { stat.op(yytext); }
-")"     {            }
+")"     {                  }
 ("["|"<:")  { stat.op(yytext); }
-("]"|":>")  {            }
+("]"|":>")  {                  }
 "."     { stat.op(yytext); }
 "&"     { stat.op(yytext); }
 "!"     { stat.op(yytext); }
@@ -215,9 +162,7 @@ asm         { printf("asm is unsupported\n"); }
 ">"     { stat.op(yytext); }
 "^"     { stat.op(yytext); }
 "|"     { stat.op(yytext); }
-"?"     { stat.op(yytext); stat.cond(); }
-
-\\      { /* macro continuation */ }
+"@"     { stat.op(yytext); }
 
   /***************** constants ***************/
 
