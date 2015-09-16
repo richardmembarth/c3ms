@@ -21,7 +21,7 @@ CC  := gcc
 CXX := g++
 
 objs           := c3ms.o c3mslex.o c3ms.tab.o
-outputbinaries := c3ms-impala
+outputbinaries := c3ms
 
 ifdef PRODUCTION
   CFLAGS := -I$(INCL) -O3 -DNDEBUG -fomit-frame-pointer
@@ -35,7 +35,7 @@ endif
 
 all :  $(outputbinaries)
 
-c3ms-impala : $(objs)
+c3ms : $(objs)
 	$(CXX) $(CPPFLAGS) -o $@ $^
 
 %.tab.cpp: %.y %.l

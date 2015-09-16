@@ -29,6 +29,8 @@
 #include "CodeStatisticsGatherer.h"
 #include "c3ms.tab.cpp.h"
 
+// Avoid linking conflicts with glibc's stat
+#define stat code_stats
 
   extern YYSTYPE yylval;
 
