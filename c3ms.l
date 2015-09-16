@@ -94,17 +94,17 @@ u64         { stat.type(yytext); }
 f32         { stat.type(yytext); }
 f64         { stat.type(yytext); }
 bool        { stat.type(yytext); }
-simd        {  }
+simd        { stat.type(yytext); }
 
 let         { stat.keyword(yytext); }
 static      { stat.keyword(yytext); }
 extern      { stat.keyword(yytext); }
 type        { stat.keyword(yytext); }
-mut         {  }
+mut         { stat.keyword(yytext); }
 fn          { stat.keyword(yytext); }
 
 break       { stat.keyword(yytext); }
-in          { }
+in          { /* Part of the for loop */ }
 continue    { stat.keyword(yytext); }
 else        { stat.keyword(yytext); }
 for         { stat.keyword(yytext); }
