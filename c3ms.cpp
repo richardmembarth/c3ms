@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
   for (int nfile = optind; nfile < argc; ++nfile) {
     double localVolume, localDiff;
 
-    if (stat(argv[nfile], &fileStat) != 0) {
+    if (lstat(argv[nfile], &fileStat) != 0) {
       printf("Error accessing %s errno=%d\n", argv[nfile], errno);
       exit(EXIT_FAILURE);
     }
