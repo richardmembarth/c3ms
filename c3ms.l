@@ -119,6 +119,8 @@ true        { stat.constant(yytext); }
 
   /***************** operators ***************/
 
+"?"     { stat.op(yytext); }
+"$"     { stat.op(yytext); }
 "+="    { stat.op(yytext); }
 "-="    { stat.op(yytext); }
 "*="    { stat.op(yytext); }
